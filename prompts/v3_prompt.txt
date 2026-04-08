@@ -1,0 +1,14 @@
+# Fluency judge v3.0 — public summary (full prompt text not redistributed)
+
+## Relation to v2
+Version **v3** uses the **same scoring backbone and output format family** as v2 for the dimensions that remain active. It is **not** a wholly separate prompt family with different JSON keys; it is a **focused variant** of the structured judge.
+
+## What changes in v3
+- Only a **subset of the v2 dimensions** contributes to the published aggregate score (the remaining dimensions are dropped from the aggregate by design).
+- The aggregate (`fluency3_` in the released tables) is a **renormalized weighted mean** over that subset so that weights sum to one. **Concrete weights are not published in this file.**
+
+## Prompting
+- At evaluation time, v3 reuses the **same system-level instructions** as v2 for the active dimensions; there is **no separate long “v3-only” prompt artifact** beyond this focus change and aggregation rule.
+
+## Note
+Exact strings, per-dimension definitions, and implementation snippets are **omitted** from this public repository; they remain part of the internal evaluation tooling.

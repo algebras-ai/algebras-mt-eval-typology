@@ -1,0 +1,18 @@
+# Fluency judge v2.0 — public summary (full system prompt not redistributed)
+
+## Role
+The v2 judge evaluates translation output on **fluency depth** (beyond surface adequacy), using a fixed **structured rubric** and a **numeric scale** per sub-dimension.
+
+## Structure (conceptual)
+- Several **independent scored dimensions** (e.g. naturalness of expression, conventional wording, discourse-level coherence, register/pragmatics, and adaptation away from inappropriate literal transfer). Exact labels and definitions are omitted here.
+- The model returns **structured output** (e.g. machine-readable records) including per-dimension scores and short **diagnostic fields** (issue type, severity, optional spans/suggestions). Exact schema and key names are omitted.
+
+## Calibration (high level)
+- Instructions discourage inflating top-of-scale scores; mid-range is the default unless the translation is clearly excellent across dimensions.
+- Instructions emphasize sensitivity to **fluent-looking but shallow** output and to small but clear errors.
+
+## Aggregation
+- A **single aggregate score** for the paper’s “structured judge” is computed as a **weighted linear combination** of the dimension scores. **Weights are not published in this file.**
+
+## Note
+For reproducibility of *numerical results*, the evaluation pipeline used a **frozen prompt and weight vector** inside the internal benchmarks repository; this public repository intentionally ships only this abstract description.

@@ -1,0 +1,14 @@
+__pycache__/
+*.pyc
+.DS_Store
+figures/*.png
+figures/*.pdf
+preprint/tables/*.tex
+preprint/*.aux
+preprint/*.bbl
+preprint/*.blg
+preprint/*.log
+preprint/*.out
+preprint/*.pdf
+.venv/
+data/merged.csv
