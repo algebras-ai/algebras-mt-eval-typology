@@ -70,15 +70,15 @@ Files under `prompts/`:
 
 ## GitHub
 
-Репозиторий: [github.com/algebras-ai/algebras-mt-eval-typology](https://github.com/algebras-ai/algebras-mt-eval-typology) (организация [Algebras AI](https://github.com/algebras-ai)).
+Repository: [github.com/algebras-ai/algebras-mt-eval-typology](https://github.com/algebras-ai/algebras-mt-eval-typology) (organization [Algebras AI](https://github.com/algebras-ai)).
 
-Клонирование:
+Clone:
 
 ```bash
 git clone https://github.com/algebras-ai/algebras-mt-eval-typology.git
 ```
 
-Push с машины, где установлен [GitHub CLI](https://cli.github.com/) и выполнен `gh auth login`:
+Push from a machine where [GitHub CLI](https://cli.github.com/) is installed and you have run `gh auth login`:
 
 ```bash
 gh auth setup-git
@@ -86,7 +86,7 @@ git remote set-url origin https://github.com/algebras-ai/algebras-mt-eval-typolo
 git push -u origin main
 ```
 
-Вариант по SSH (`git@github.com:algebras-ai/algebras-mt-eval-typology.git`) — только если в аккаунте GitHub добавлен SSH-ключ.
+Use SSH (`git@github.com:algebras-ai/algebras-mt-eval-typology.git`) only if an SSH key is added to your GitHub account.
 
 ## License
 
