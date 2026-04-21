@@ -19,15 +19,16 @@ This repository includes a **standalone Jupyter notebook** and **frozen parquet*
 
 | Artifact | Path |
 |----------|------|
-| Notebook | [`notebooks/fluency2_wmt_evaluation.ipynb`](notebooks/fluency2_wmt_evaluation.ipynb) |
+| Notebook | [`fluency2_wmt_evaluation.ipynb`](fluency2_wmt_evaluation.ipynb) (repo root; a copy may also exist under `notebooks/`) |
 | WMT25 merged metrics | [`data/wmt25/merged_all_metrics.parquet`](data/wmt25/merged_all_metrics.parquet) |
 | WMT22–24 MQM metrics | [`data/wmt_mqm/all_metrics_mqm.parquet`](data/wmt_mqm/all_metrics_mqm.parquet) |
 
-**Key results (see notebook for tables and figures):**
+**Key results (see notebook for tables and figures).** Segment-level correlations use **fair subsets**—rows where the human score and *all* compared automatic metrics are non-missing—so Spearman and pairwise accuracy (PA) are comparable across metrics.
 
-- **WMT25 ESA:** fluency2 Spearman **0.615** vs GEMBA **0.555**, MetricX **0.519** (overall segment-level vs human).
-- **WMT22–24 MQM:** fluency2 Spearman **0.537** vs GEMBA-SQM (reported as GEMBA-MQM) **0.520** (overall; GEMBA precomputed scores cover **WMT22 only**, three pairs).
-- **Pairwise accuracy:** fluency2 best on **9/11** WMT25 language pairs vs baselines in the notebook comparison.
+- **WMT25 ESA (fair, n = 3,274, all six auto metrics + human):** fluency2 Spearman **0.615**, PA **0.726**; GEMBA-ESA **0.555** / **0.709**; MetricX **0.519** / **0.688**.
+- **WMT22–24 MQM — fair subset (n = 824, all four metrics + human; WMT22 triples only):** fluency2 Spearman **0.573**, PA **0.753**; GEMBA-MQM **0.520** / **0.699**; GEMBA-DA **0.476** / **0.674**; chrF++ **0.350** / **0.652**.
+- **WMT22–24 MQM — full human-scored rows (per-metric n varies):** fluency2 Spearman **0.537**, PA **0.737** on **n = 2,658**; GEMBA/chrF++ remain on **n = 824** as above.
+- **Pairwise accuracy by language pair (WMT25):** fluency2 leads on **9/11** pairs vs baselines in the notebook (Table 3).
 
 ### Running the notebook
 
@@ -35,7 +36,7 @@ The notebook reads the included parquet files directly (no recomputation).
 
 ```bash
 pip install pandas numpy scipy matplotlib jupyter
-jupyter notebook notebooks/fluency2_wmt_evaluation.ipynb
+jupyter notebook fluency2_wmt_evaluation.ipynb
 ```
 
 Launch Jupyter from the **repository root** (or open the notebook from your IDE with cwd at the root) so paths resolve to `data/wmt25/` and `data/wmt_mqm/`.
