@@ -10,7 +10,113 @@ LLM judge gains pairwise accuracy advantage over chrF on a 12-pair
 EN→X frontier-model benchmark with WMT25 human adequacy scores
 (ρ = 0.77, Holm p = 0.04, 95% CI [0.31, 0.96]).
 
-## Reproduce
+## fluency2 Evaluation (WMT25 ESA + WMT22–24 MQM)
+
+This repository includes a **standalone Jupyter notebook** and **frozen parquet** artifacts for the fluency2 structured judge (Gemini 3 Flash, five subdimensions) evaluated against human scores on:
+
+- **WMT25** General MT Task (ESA protocol, 11 language pairs)
+- **WMT22–24** General MT Task (MQM protocol; six language pairs in the sample)
+
+| Artifact | Path |
+|----------|------|
+| Notebook | [`notebooks/fluency2_wmt_evaluation.ipynb`](notebooks/fluency2_wmt_evaluation.ipynb) |
+| WMT25 merged metrics | [`data/wmt25/merged_all_metrics.parquet`](data/wmt25/merged_all_metrics.parquet) |
+| WMT22–24 MQM metrics | [`data/wmt_mqm/all_metrics_mqm.parquet`](data/wmt_mqm/all_metrics_mqm.parquet) |
+
+**Key results (see notebook for tables and figures):**
+
+- **WMT25 ESA:** fluency2 Spearman **0.615** vs GEMBA **0.555**, MetricX **0.519** (overall segment-level vs human).
+- **WMT22–24 MQM:** fluency2 Spearman **0.537** vs GEMBA-SQM (reported as GEMBA-MQM) **0.520** (overall; GEMBA precomputed scores cover **WMT22 only**, three pairs).
+- **Pairwise accuracy:** fluency2 best on **9/11** WMT25 language pairs vs baselines in the notebook comparison.
+
+### Running the notebook
+
+The notebook reads the included parquet files directly (no recomputation).
+
+```bash
+pip install pandas numpy scipy matplotlib jupyter
+jupyter notebook notebooks/fluency2_wmt_evaluation.ipynb
+```
+
+Launch Jupyter from the **repository root** (or open the notebook from your IDE with cwd at the root) so paths resolve to `data/wmt25/` and `data/wmt_mqm/`.
+
+### Reproducing from scratch
+
+#### WMT25 data
+
+1. Clone the WMT25 General MT repository:
+
+```bash
+git clone https://github.com/wmt-conference/wmt25-general-mt.git
+```
+
+2. Download human scores:
+
+```bash
+wget https://github.com/wmt-conference/wmt25-general-mt/raw/main/data/wmt25-genmt-humeval.jsonl
+```
+
+3. Compute fluency2 (requires Gemini API key, ~\$3):
+
+```bash
+export GEMINI_API_KEY=your_key
+python3 algebras-ml/tools/compute_fluency2_gemini.py \
+  --input data_raw/wmt25/wmt25-genmt-humeval.jsonl \
+  --output data_interim/fluency2_wmt25.parquet \
+  --max-concurrent 20 --resume
+```
+
+4. Build merged dataset (from the [benchmarks](https://github.com/algebras-ai/benchmarks) monorepo layout):
+
+```bash
+python3 tools/merge_wmt25_auto_metrics.py
+```
+
+#### WMT22–24 MQM data
+
+1. Clone MQM annotations and GEMBA precomputed scores:
+
+```bash
+git clone https://github.com/google/wmt-mqm-human-evaluation.git
+git clone https://github.com/MicrosoftTranslator/GEMBA.git
+```
+
+2. Run pipeline (paths may point to your local clones):
+
+```bash
+export MT_MQM_ROOT=~/Code/wmt-mqm-human-evaluation
+python3 tools/wmt_mqm_historical_pipeline.py
+python3 tools/merge_gemba_into_wmt_mqm.py
+```
+
+3. Compute fluency2 on MQM data (~\$1):
+
+```bash
+python3 algebras-ml/tools/compute_fluency2_gemini.py \
+  --input data_interim/wmt_mqm/sampled_segments.parquet \
+  --output data_interim/wmt_mqm/all_metrics_mqm.parquet \
+  --max-concurrent 20 --resume
+```
+
+Helper scripts shipped under [`tools/`](tools/) mirror the [benchmarks](https://github.com/algebras-ai/benchmarks) workflow; `build_wmt_mqm_from_human_eval_repo.py` is the recommended builder when using only the human-evaluation clone.
+
+### Data sources (fluency2 evaluation)
+
+- **WMT25 human scores:** [wmt-conference/wmt25-general-mt](https://github.com/wmt-conference/wmt25-general-mt)
+- **WMT25 automatic scores:** GEMBA-ESA-GPT4.1, MetricX-24-Hybrid-XL, XCOMET-XL, CometKiwi-XL from the official WMT25 repository (not recomputed here)
+- **WMT22–24 MQM:** [google/wmt-mqm-human-evaluation](https://github.com/google/wmt-mqm-human-evaluation)
+- **GEMBA scores:** [MicrosoftTranslator/GEMBA](https://github.com/MicrosoftTranslator/GEMBA) (`mt-metrics-eval-v2` currently ships **WMT22** segment scores used in this release)
+- **Syntactic distances:** lang2vec (WALS features), as in the notebook
+
+### Limitations (fluency2 evaluation)
+
+- fluency2 backbone: **Gemini 3 Flash** only
+- Typological pattern (ρ ≈ −0.83) **significant only vs chrF++**, not vs neural metrics in the notebook’s tests
+- GEMBA segment scores **WMT22 only** (three pairs) in the published GEMBA bundle
+- EN→mas_KE: fluency2 PA can be low when all systems score very low on the segment set
+- Potential **training-data overlap** with Gemini 3 Flash relative to WMT25 publication dates
+
+## Reproduce (paper pipeline)
 
 ```bash
 pip install -r requirements.txt
@@ -38,7 +144,7 @@ The repository ships canonical `data/null_simulation_pa.csv`, `data/bootstrap_ci
 
 A **short preprint** (title, authors, abstract summary) is in [`preprint/README.md`](preprint/README.md). The **full LaTeX/PDF paper is not included** in this public repository (pending or venue-specific publication). Optional LaTeX **table fragments** for the results can be generated with `python code/09_tables.py` into `preprint/tables/`.
 
-## Data
+## Data (paper)
 
 | File | Rows | Description |
 |------|------|-------------|
@@ -94,6 +200,8 @@ MIT — see `LICENSE`.
 
 ## Citation
 
+Typology paper:
+
 ```bibtex
 @article{mongush-pukhov-2026-typological,
   title={Syntactic Typological Distance Predicts When LLM Judges
@@ -101,5 +209,16 @@ MIT — see `LICENSE`.
   author={Mongush, Airana and Pukhov, Dmitrii},
   year={2026},
   note={R\&D at Algebras AI}
+}
+```
+
+fluency2 evaluation release (this notebook + metrics):
+
+```bibtex
+@misc{algebras2026fluency2,
+  title={fluency2: A Structured LLM Judge for Machine Translation Evaluation},
+  author={Algebras AI},
+  year={2026},
+  url={https://github.com/algebras-ai/algebras-mt-eval-typology}
 }
 ```

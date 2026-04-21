@@ -1,6 +1,12 @@
 __pycache__/
 *.pyc
+.env
 .DS_Store
+*.log
+checkpoint_*.parquet
+fluency2_checkpoint.parquet
+node_modules/
+.next/
 figures/*.png
 figures/*.pdf
 preprint/tables/*.tex
