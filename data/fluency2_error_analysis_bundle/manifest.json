@@ -1,0 +1,33 @@
+{
+  "wmt25_path": "/Users/admin/Code/benchmarks/data_interim/wmt25_full_analysis/merged_all_metrics.parquet",
+  "mqm_path": "/Users/admin/Code/benchmarks/data_interim/wmt_mqm/all_metrics_mqm.parquet",
+  "n_wmt25_fair": 3274,
+  "n_mqm_fair": 824,
+  "mqm_metrics": [
+    "fluency2",
+    "gemba_mqm",
+    "gemba_da",
+    "chrf_pp"
+  ],
+  "wmt25_metrics": [
+    "fluency2",
+    "gemba_score",
+    "metricx_score",
+    "xcomet_score",
+    "cometKiwi_score",
+    "chrf_pp"
+  ],
+  "files": [
+    "mqm_disagreement_by_year_pair.csv",
+    "mqm_kendall_tau_by_human_quintile.csv",
+    "mqm_top_1000_fluency2_disagreements.csv",
+    "wmt25_issue_type_distribution_by_pair.csv",
+    "wmt25_kendall_tau_by_human_quintile.csv",
+    "wmt25_length_bucket_stats.csv",
+    "wmt25_pa_matrix_pair_x_metric.csv",
+    "wmt25_per_language_pair_stats.csv",
+    "wmt25_subdimension_spearman_by_pair.csv",
+    "wmt25_subdimension_spearman_matrix.csv",
+    "wmt25_top_1000_fluency2_disagreements.csv"
+  ]
+}

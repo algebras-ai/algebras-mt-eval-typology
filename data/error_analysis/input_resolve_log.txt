@@ -1,0 +1,24 @@
+OK sampled_segments -> /Users/admin/Code/benchmarks/data_interim/wmt_mqm/sampled_segments.parquet
+OK fluency2_opus47 -> /Users/admin/Code/benchmarks/data_interim/wmt_mqm/fluency2_opus47.parquet
+MISSING: fluency2_gemini — tried [PosixPath('/Users/admin/Code/benchmarks/data_interim/wmt_mqm/fluency2_gemini.parquet')]
+OK fluency2_gpt5 -> /Users/admin/Code/benchmarks/data_interim/wmt_mqm/fluency2_gpt5.parquet
+MISSING: fluency_mqm_opus47 — tried [PosixPath('/Users/admin/Code/benchmarks/data_interim/wmt_mqm/fluency_mqm_opus47.parquet')]
+OK fluency_mqm_gemini -> /Users/admin/Code/benchmarks/data_interim/wmt_mqm/fluency_mqm_gemini_fluency_mqm.parquet
+OK fluency_mqm_gpt5 -> /Users/admin/Code/benchmarks/data_interim/wmt_mqm/fluency_mqm_gpt5_fluency_mqm.parquet
+sampled_segments: 44 rows involved in duplicate keys ['seg_id', 'system_id']
+  wrote /Users/admin/Code/benchmarks/data_interim/error_analysis/tables/duplicate_keys_sampled_segments.csv
+sampled_segments: collapsed 22 duplicate-key rows (keep='first')
+fluency2_opus47: 44 rows involved in duplicate keys ['seg_id', 'system_id']
+  wrote /Users/admin/Code/benchmarks/data_interim/error_analysis/tables/duplicate_keys_fluency2_opus47.csv
+fluency2_opus47: collapsed 22 duplicate-key rows (keep='first')
+MISSING side: fluency2_gemini
+fluency2_gpt5: 44 rows involved in duplicate keys ['seg_id', 'system_id']
+  wrote /Users/admin/Code/benchmarks/data_interim/error_analysis/tables/duplicate_keys_fluency2_gpt5.csv
+fluency2_gpt5: collapsed 22 duplicate-key rows (keep='first')
+MISSING side: fluency_mqm_opus47
+fluency_mqm_gemini: 44 rows involved in duplicate keys ['seg_id', 'system_id']
+  wrote /Users/admin/Code/benchmarks/data_interim/error_analysis/tables/duplicate_keys_fluency_mqm_gemini.csv
+fluency_mqm_gemini: collapsed 22 duplicate-key rows (keep='first')
+fluency_mqm_gpt5: 44 rows involved in duplicate keys ['seg_id', 'system_id']
+  wrote /Users/admin/Code/benchmarks/data_interim/error_analysis/tables/duplicate_keys_fluency_mqm_gpt5.csv
+fluency_mqm_gpt5: collapsed 22 duplicate-key rows (keep='first')

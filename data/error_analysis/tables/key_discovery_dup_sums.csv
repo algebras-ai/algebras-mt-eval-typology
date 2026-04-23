@@ -1,0 +1,5 @@
+key,sampled_segments,fluency2_opus47,fluency2_gpt5,fluency_mqm_gemini,fluency_mqm_gpt5
+"['seg_id', 'system_id']",22,22,22,22,22
+"['seg_id', 'system_id', 'year']",15,15,15,15,15
+"['seg_id', 'system_id', 'dataset']",15,15,15,15,15
+"['seg_id', 'system_id', 'year', 'pair']",0,0,0,0,0

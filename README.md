@@ -22,6 +22,9 @@ This repository includes a **standalone Jupyter notebook** and **frozen parquet*
 | Notebook | [`fluency2_wmt_evaluation.ipynb`](fluency2_wmt_evaluation.ipynb) (repo root; a copy may also exist under `notebooks/`) |
 | WMT25 merged metrics | [`data/wmt25/merged_all_metrics.parquet`](data/wmt25/merged_all_metrics.parquet) |
 | WMT22–24 MQM metrics | [`data/wmt_mqm/all_metrics_mqm.parquet`](data/wmt_mqm/all_metrics_mqm.parquet) |
+| Error / failure analysis (WMT25 + MQM + three-judge MQM headline) | [`fluency2_error_analysis.ipynb`](fluency2_error_analysis.ipynb) |
+| Frozen fluency2 disagreement bundle (top-1000 CSVs, stats) | [`data/fluency2_error_analysis_bundle/`](data/fluency2_error_analysis_bundle/) |
+| Three-judge MQM error analysis (slices, figures, captions, examples) | [`data/error_analysis/`](data/error_analysis/) |
 
 **Key results (see notebook for tables and figures).** Segment-level correlations use **fair subsets**—rows where the human score and *all* compared automatic metrics are non-missing—so Spearman and pairwise accuracy (PA) are comparable across metrics.
 
@@ -40,6 +43,8 @@ jupyter notebook fluency2_wmt_evaluation.ipynb
 ```
 
 Launch Jupyter from the **repository root** (or open the notebook from your IDE with cwd at the root) so paths resolve to `data/wmt25/` and `data/wmt_mqm/`.
+
+[`fluency2_error_analysis.ipynb`](fluency2_error_analysis.ipynb) uses the same parquets plus `data/fluency2_error_analysis_bundle/` for Part 2 and `data/error_analysis/` for the multi-judge headline section. Optional: regenerate headline PNGs and tables with `python3 tools/build_fluency2_error_analysis_headline_artifacts.py` (requires extra judge parquets under `data/wmt_mqm/` as shipped).
 
 ### Reproducing from scratch
 

@@ -1,0 +1,4 @@
+year,pair,mean,median,count
+wmt22,en-de,0.949833,0.809419,150
+wmt22,en-ru,0.924502,0.781984,449
+wmt22,zh-en,0.778799,0.852946,225
